@@ -32,7 +32,7 @@ echo "\documentclass[border=2mm]{standalone}
     \addplot[domain=-8*pi:9*pi,mark=none, white, samples=2] {-2};
 
     %%%% STRUCTURE FOR INCIDENCE
-    % \addplot[thick,blue] graphics[xmin=-10,ymin=-1.7 ,xmax=10,ymax=0.3] {cube};
+    % \addplot[thick,blue] graphics[xmin=-16.5,ymin=-1.3 ,xmax=23.5,ymax=1.25 ] {grapha};
     \addplot[thick,blue] graphics[xmin=-10,ymin=-1.7 ,xmax=10,ymax=0.3] {cube};
 
 
@@ -86,8 +86,9 @@ echo "\documentclass[border=2mm]{standalone}
     \addplot[domain=-8*pi:9*pi,mark=none, white, samples=2] {-2};
 
     %%%% STRUCTURE FOR INCIDENCE
-    % \addplot[thick,blue] graphics[xmin=-10,ymin=-1.7 ,xmax=10,ymax=0.3] {cube};
+    % \addplot[thick,blue] graphics[xmin=-16.5,ymin=-1.3 ,xmax=23.5,ymax=1.25 ] {grapha};
     \addplot[thick,blue] graphics[xmin=-10,ymin=-1.7 ,xmax=10,ymax=0.3] {cube};
+
 
 
     %%%% BANISHING BEAM FROM -7*pi TO 0*pi
@@ -145,7 +146,7 @@ echo "\documentclass[border=2mm]{standalone}
     \addplot[domain=-8*pi:9*pi,mark=none, white, samples=2] {-2};
 
     %%%% STRUCTURE FOR INCIDENCE
-    % \addplot[thick,blue] graphics[xmin=-10,ymin=-1.7 ,xmax=10,ymax=0.3] {cube};
+    % \addplot[thick,blue] graphics[xmin=-16.5,ymin=-1.3 ,xmax=23.5,ymax=1.25 ] {grapha};
     \addplot[thick,blue] graphics[xmin=-10,ymin=-1.7 ,xmax=10,ymax=0.3] {cube};
 
 
@@ -178,14 +179,14 @@ done
 
 
 #### 70 frames
-# incoming_beam 28
-# wave_transition 14
-# outgoing_beam 28
+incoming_beam 28
+wave_transition 14
+outgoing_beam 28
 
 
-incoming_beam 12
-wave_transition 6
-outgoing_beam 12
+# incoming_beam 12
+# wave_transition 6
+# outgoing_beam 12
 
 
 
