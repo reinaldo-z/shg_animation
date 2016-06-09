@@ -1,0 +1,18 @@
+\documentclass{standalone}
+\usepackage{tikz,tikz-3dplot}
+
+\begin{document}
+  \tdplotsetmaincoords{70}{115}
+
+  \begin{tikzpicture}[scale=4,tdplot_main_coords]
+    \coordinate (O) at (0,0,0);
+    \tdplotsetcoord{P}{1.414213}{54.68636}{45}
+
+    \draw[blue!35,fill=blue!50,fill opacity=0.2] (O) -- (Py) -- (Pyz) -- (Pz) -- cycle;
+    \draw[blue!35,fill=blue!50,fill opacity=0.2] (O) -- (Px) -- (Pxy) -- (Py) -- cycle;
+    \draw[blue!35,fill=blue!50,fill opacity=0.2] (O) -- (Px) -- (Pxz) -- (Pz) -- cycle;
+    \draw[blue!35,fill=blue!50,fill opacity=0.2] (Pz) -- (Pyz) -- (P) -- (Pxz) -- cycle;
+    \draw[blue!35,fill=blue!50,fill opacity=0.2] (Px) -- (Pxy) -- (P) -- (Pxz) -- cycle;
+    \draw[blue!35,fill=blue!50,fill opacity=0.2] (Py) -- (Pxy) -- (P) -- (Pyz) -- cycle;
+  \end{tikzpicture}
+\end{document}
