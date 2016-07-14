@@ -180,7 +180,7 @@ range=25.13
 div=`echo "$range/$1" | bc -l`
 
 
-for (( i = $parse; i < $parse+$1; i++ )); do
+for (( i = $parse; i <= $parse+$1; i++ )); do
 
 
 echo "i=$i"
@@ -224,15 +224,7 @@ echo "\documentclass{article}
 
 \end{document}" >> shg-frame`printf "%03d\n" $i`.tex
 
-# ((counter++))
-
 step1=`echo "$step1 + $div" | bc -l`
-
-
-# step1=`echo "$step1+1.5/$1" | bc -l` ### used to show a draw
-# step2=`echo "$step2+8*3.14159/$1" | bc -l` ### used to show a draw
-
-
 
 latex
 
@@ -253,9 +245,15 @@ range=25.13
 div=`echo "$range/$1" | bc -l`
 
 
-for (( i = $parse+1; i < $parse+$1; i++ )); do
+for (( i = $parse; i < $parse+$1-1; i++ )); do
 
-step1=`echo "0.01 + $div*($i - $parse)" | bc -l`
+
+echo "i=$i"
+echo "div=$div"
+echo "step1=$step1"
+
+step1=`echo "$step1 + $div" | bc -l`
+
 
 echo "\documentclass{article}
 \usepackage{amsmath}
@@ -286,7 +284,7 @@ echo "\documentclass{article}
     %%%% OUTGOING BEAM FROM 0,0
     \addplot[domain=$step1:8*pi,samples=200,blue,thick,rotate around={20:(0,0)}]{0.5*sin(deg(x))};
     \draw [blue,thick,rotate around={20:(0,0)},-] ($step1,0) -- (8*pi,0);
-    \addplot[domain=-0.1:0.1,mark=none, white, samples=2] {1.2} node[above,black]{\small $\mathbf{E}(2\omega)$} ;
+    \addplot[domain=-0.1:0.1,mark=none, white, samples=2] {1.2} node[above,black,opacity=1.5*$step1]{\small $\mathbf{E}(2\omega)$} ;
 
 \end{axis}
 \end{tikzpicture}
@@ -294,16 +292,12 @@ echo "\documentclass{article}
 
 \end{document}" >> shg-frame`printf "%03d\n" $i`.tex
 
-((counter++))
-
-step1=`echo "$step1+1.5/$1" | bc -l` ### used to show a draw
-step2=`echo "$step2+8*3.14159/$1" | bc -l` ### used to show a draw
-
-
 
 latex
 
 done
+
+parse=$i
 
 
 }
@@ -311,18 +305,17 @@ done
 ################################################################################
 
 
-#### 70 frames
 incoming_beam 1             # Genera 2 figuras  mas que las indicadas, 
                             # incluyendo la 000 que es solo la estructura
-wave_transition 0           # OPCIONAL: Usar "0" o al menos "3" como entrada. 
-                            # Produce una trancisi\'on suave entre 1omega y 2 omega.
-                            # Genera el numero de figuras de entrada.
-outgoing_beam 4
-outgoing_desapearing_beam 0
 
-# incoming_beam 12
-# wave_transition 6
-# outgoing_beam 12
+wave_transition 0           # Genera el mismo numero de figuras que la entrada
+                            # OPCIONAL: Usar "0" o al menos "3" como entrada. 
+                            # Produce una trancision evanecente entre 1omega y 2 omega.
+                            
+outgoing_beam 4             # Genera el mismo numero de figuras que la entrada
+
+outgoing_desapearing_beam 4 # Genera una figura menos que las indicadas
+
 
 
 
