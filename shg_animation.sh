@@ -10,16 +10,13 @@ latex () {
 
 incoming_beam () {
 
-step1=-7.999999999
-
-for (( i = 1; i <= $1; i++ )); do
-
-step1=`echo "$step1+7.0/$1" | bc -l`
-
-echo "\documentclass[border=2mm]{standalone}
+echo "\documentclass{article}
 \usepackage{amsmath}
 \usepackage{pgfplots}
 \usetikzlibrary{3d,calc}
+\usepackage[paperwidth=2.4in,paperheight=1.88in,margin=0in]{geometry}
+
+\pagestyle{empty}
 
 \pgfplotsset{compat=1.12}
 \begin{document}
@@ -27,18 +24,54 @@ echo "\documentclass[border=2mm]{standalone}
 %%%% INCOMING RED BEAM
 \begin{tikzpicture}
     \begin{axis}[hide axis][]
-    %%%% Auxiliar white lines to have same frame size: objects in white color
-    \addplot[domain=-8*pi:9*pi,mark=none, white, samples=2] {2.3};
-    \addplot[domain=-8*pi:9*pi,mark=none, white, samples=2] {-2};
 
     %%%% STRUCTURE FOR INCIDENCE
-    % \addplot[thick,blue] graphics[xmin=-16.5,ymin=-1.3 ,xmax=23.5,ymax=1.25 ] {grapha};
-    \addplot[thick,blue] graphics[xmin=-10,ymin=-1.7 ,xmax=10,ymax=0.3] {cube};
+    \addplot[thick,blue] graphics[xmin=-16.5,ymin=-1.3 ,xmax=23.5,ymax=1.25 ] {grapha};
+    % \addplot[thick,blue] graphics[xmin=-10,ymin=-1.7 ,xmax=10,ymax=0.3] {cube};
 
+    \addplot[domain=-8*pi:-8.01,samples=200,white,thick,rotate around={-20:(0,0)}]{0.5*sin(deg(x/2))};
+    \addplot[domain=-6.5*pi:-6.4*pi,mark=none, white, samples=2] {2.3} node[below, white]{\small $\mathbf{E}(\omega)$} ;
+    
+
+
+\end{axis}
+\end{tikzpicture}
+
+
+\end{document}" >> shg-frame`printf "%03d\n" $i`.tex
+
+latex
+
+range=-23.999999
+div=`echo "- $range/$1" | bc -l`
+
+for (( i = 1; i <= $1+1; i++ )); do
+
+step1=`echo "$range + $div*($i-1)" | bc -l`
+
+
+echo "\documentclass{article}
+\usepackage{amsmath}
+\usepackage{pgfplots}
+\usetikzlibrary{3d,calc}
+\usepackage[paperwidth=2.4in,paperheight=1.88in,margin=0in]{geometry}
+
+\pagestyle{empty}
+
+\pgfplotsset{compat=1.12}
+\begin{document}
+
+%%%% INCOMING RED BEAM
+\begin{tikzpicture}
+    \begin{axis}[hide axis][]
+
+    %%%% STRUCTURE FOR INCIDENCE
+    \addplot[thick,blue] graphics[xmin=-16.5,ymin=-1.3 ,xmax=23.5,ymax=1.25 ] {grapha};
+    % \addplot[thick,blue] graphics[xmin=-10,ymin=-1.7 ,xmax=10,ymax=0.3] {cube};
 
     %%%% INCOMING RED BEAM FROM -7*pi TO 0*pi
-    \addplot[domain=-8*pi:$step1*pi+pi,samples=200,red,thick,rotate around={-20:(0,0)}]{0.5*sin(deg(x/2))};
-    \draw [red,thick,rotate around={-20:(0,0)},->] (-8*pi,0) -- ($step1*pi+pi,0);
+    \addplot[domain=-8*pi:$step1,samples=200,red,thick,rotate around={-20:(0,0)}]{0.5*sin(deg(x/2))};
+    \draw [red,thick,rotate around={-20:(0,0)},->] (-8*pi,0) -- ($step1,0);
     \addplot[domain=-6.5*pi:-6.4*pi,mark=none, white, samples=2] {2.3} node[below, black]{\small $\mathbf{E}(\omega)$} ;
     
 
@@ -54,6 +87,7 @@ latex
 done
 
 parse=$i
+echo $parse
 
 }
 
@@ -70,10 +104,11 @@ step2=0     ### used to apear a draw
 for (( i = $parse; i < $parse+$1; i++ )); do
 
 
-echo "\documentclass[border=2mm]{standalone}
+echo "\documentclass{article}
 \usepackage{amsmath}
 \usepackage{pgfplots}
 \usetikzlibrary{3d,calc}
+\usepackage[paperwidth=2.4in,paperheight=1.88in,margin=0in]{geometry}
 
 \pgfplotsset{compat=1.12}
 \begin{document}
@@ -81,13 +116,10 @@ echo "\documentclass[border=2mm]{standalone}
 %%%% BANISHING RED BEAM
 \begin{tikzpicture}
     \begin{axis}[hide axis][]
-    %%%% Auxiliar white lines to have same frame size: objects in white color
-    \addplot[domain=-8*pi:9*pi,mark=none, white, samples=2] {2.3};
-    \addplot[domain=-8*pi:9*pi,mark=none, white, samples=2] {-2};
 
     %%%% STRUCTURE FOR INCIDENCE
-    % \addplot[thick,blue] graphics[xmin=-16.5,ymin=-1.3 ,xmax=23.5,ymax=1.25 ] {grapha};
-    \addplot[thick,blue] graphics[xmin=-10,ymin=-1.7 ,xmax=10,ymax=0.3] {cube};
+    \addplot[thick,blue] graphics[xmin=-16.5,ymin=-1.3 ,xmax=23.5,ymax=1.25 ] {grapha};
+    % \addplot[thick,blue] graphics[xmin=-10,ymin=-1.7 ,xmax=10,ymax=0.3] {cube};
 
 
 
@@ -130,10 +162,11 @@ counter=0
 for (( i = $parse; i < $parse+$1; i++ )); do
 
 
-echo "\documentclass[border=2mm]{standalone}
+echo "\documentclass{article}
 \usepackage{amsmath}
 \usepackage{pgfplots}
 \usetikzlibrary{3d,calc}
+\usepackage[paperwidth=2.4in,paperheight=1.88in,margin=0in]{geometry}
 
 \pgfplotsset{compat=1.12}
 \begin{document}
@@ -141,13 +174,10 @@ echo "\documentclass[border=2mm]{standalone}
 %%%% OUTGOING BLUE BEAM
 \begin{tikzpicture}
     \begin{axis}[hide axis][]
-    %%%% Auxiliar white lines to have same frame size: objects in white color
-    \addplot[domain=-8*pi:9*pi,mark=none, white, samples=2] {2.3};
-    \addplot[domain=-8*pi:9*pi,mark=none, white, samples=2] {-2};
 
     %%%% STRUCTURE FOR INCIDENCE
-    % \addplot[thick,blue] graphics[xmin=-16.5,ymin=-1.3 ,xmax=23.5,ymax=1.25 ] {grapha};
-    \addplot[thick,blue] graphics[xmin=-10,ymin=-1.7 ,xmax=10,ymax=0.3] {cube};
+    \addplot[thick,blue] graphics[xmin=-16.5,ymin=-1.3 ,xmax=23.5,ymax=1.25 ] {grapha};
+    % \addplot[thick,blue] graphics[xmin=-10,ymin=-1.7 ,xmax=10,ymax=0.3] {cube};
 
 
     %%%% OUTGOING BEAM FROM 0,0
@@ -179,9 +209,9 @@ done
 
 
 #### 70 frames
-incoming_beam 28
-wave_transition 14
-outgoing_beam 28
+incoming_beam 4
+wave_transition 4
+outgoing_beam 0
 
 
 # incoming_beam 12
